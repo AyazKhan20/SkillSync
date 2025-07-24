@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section id="home" class="pt-16 hero-gradient">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 text-center">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+            Stop Guessing. <span class="text-blue-600">Start Growing.</span>
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600">
+            Upload your resume and let our AI analyze your skills. We'll match you with the perfect job and show you the exact skills you need to land it.
+        </p>
+        <div class="mt-8">
+            <a href="/Identity/Account/Register" class="inline-block bg-blue-600 text-white font-bold text-lg px-8 py-4 rounded-lg shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-transform">
+                Find Your Future Now
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center fade-in-section">
+            <h2 class="text-3xl font-bold text-gray-900">A Smarter Way to Build Your Career</h2>
+            <p class="mt-4 text-lg text-gray-600">Everything you need to go from student to professional.</p>
+        </div>
+        <div class="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md border border-gray-200/50 fade-in-section">
+                <div class="text-4xl text-blue-500 mb-4">📄</div>
+                <h3 class="text-xl font-bold text-gray-900">AI Resume Analysis</h3>
+                <p class="mt-2 text-gray-600">Our system intelligently extracts and understands the skills listed on your resume.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md border border-gray-200/50 fade-in-section" style="transition-delay: 100ms;">
+                <div class="text-4xl text-blue-500 mb-4">🎯</div>
+                <h3 class="text-xl font-bold text-gray-900">Precision Job Matching</h3>
+                <p class="mt-2 text-gray-600">We match your unique skill set to our database of curated job opportunities.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md border border-gray-200/50 fade-in-section" style="transition-delay: 200ms;">
+                <div class="text-4xl text-blue-500 mb-4">🔬</div>
+                <h3 class="text-xl font-bold text-gray-900">Skill Gap Analysis</h3>
+                <p class="mt-2 text-gray-600">Instantly see which required skills you're missing for your dream job.</p>
+            </div>
+            <div class="feature-card bg-white p-8 rounded-xl shadow-md border border-gray-200/50 fade-in-section" style="transition-delay: 300ms;">
+                <div class="text-4xl text-blue-500 mb-4">📚</div>
+                <h3 class="text-xl font-bold text-gray-900">Personalized Learning</h3>
+                <p class="mt-2 text-gray-600">Get recommendations for top online courses to fill your skill gaps.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section with Gemini -->
+<section id="how-it-works" class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center fade-in-section">
+            <h2 class="text-3xl font-bold text-gray-900">See Our AI in Action</h2>
+            <p class="mt-4 text-lg text-gray-600">Let's quickly analyze a sample job description.</p>
+        </div>
+        <div class="mt-12 max-w-3xl mx-auto fade-in-section">
+            <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-200/80">
+                <label for="job-description" class="block text-sm font-medium text-gray-700">Paste a job description here:</label>
+                <textarea id="job-description" rows="8" class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="e.g., We are looking for a proactive Software Engineer to join our growing team..."></textarea>
+                <button id="summarize-btn" class="mt-4 w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    ✨ Summarize Key Points
+                </button>
+                <div id="summary-loader" class="hidden loader"></div>
+                <div id="summary-result" class="mt-6 p-4 rounded-md gemini-result-box hidden"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Gemini Career Path Section -->
+@* <section id="career-path" class="py-20 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-section">
+        <h2 class="text-3xl font-bold text-gray-900">Chart Your Career Path</h2>
+        <p class="mt-4 text-lg text-gray-600">Don't know where to start? Enter your dream job title, and our AI will create a roadmap for you.</p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-2 max-w-lg mx-auto">
+            <input type="text" id="job-title-input" class="flex-grow px-4 py-3 rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" placeholder="e.g., Data Scientist, UX Designer...">
+            <button id="generate-path-btn" class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                ✨ Generate Path
+            </button>
+        </div>
+        <div id="path-loader" class="hidden loader"></div>
+        <div id="path-result" class="mt-8 text-left p-6 rounded-lg gemini-result-box hidden"></div>
+    </div>
+</section> *@
+
+<!-- About Section -->
+<section id="about" class="py-20 bg-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in-section">
+        <h2 class="text-3xl font-bold text-gray-900">Our Mission</h2>
+        <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+            In today's competitive job market, it's not enough to just have a degree. Employers are looking for specific, demonstrable skills. Our mission is to bridge the gap between education and employment by providing students and freshers with a clear roadmap to their desired career. We believe that with the right guidance, anyone can achieve their professional goals.
+        </p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white">
+    <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+            <p class="text-base text-gray-400">&copy; 2025 Smart Job Recommender. All rights reserved.</p>
+            <p class="text-sm text-gray-500 mt-2">Built with ❤️ for the next generation of professionals.</p>
+        </div>
+    </div>
+</footer>
