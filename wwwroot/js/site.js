@@ -99,3 +99,166 @@
     callGemini(prompt, pathResultDiv, pathLoader);
             });
         });
+
+
+//Analyze Page Javascript code
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileUploadArea = document.getElementById('file-upload-area');
+    const resumeFileInput = document.getElementById('resume-file-input');
+    const fileNameDisplay = document.getElementById('file-name');
+    const dreamJobInput = document.getElementById('dream-job-input');
+    const analyzeBtn = document.getElementById('analyze-btn');
+    const loader = document.getElementById('loader');
+    const resultsSection = document.getElementById('results-section');
+    const resultsContainer = document.getElementById('results-container');
+
+    let fileIsSelected = false;
+
+            fileUploadArea.addEventListener('click', () => resumeFileInput.click());
+
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        fileUploadArea.addEventListener(eventName, preventDefaults, false);
+            });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+    e.stopPropagation();
+            }
+
+            ['dragenter', 'dragover'].forEach(eventName => {
+        fileUploadArea.addEventListener(eventName, () => fileUploadArea.classList.add('drag-over'), false);
+            });
+
+            ['dragleave', 'drop'].forEach(eventName => {
+        fileUploadArea.addEventListener(eventName, () => fileUploadArea.classList.remove('drag-over'), false);
+            });
+
+    fileUploadArea.addEventListener('drop', handleDrop, false);
+    resumeFileInput.addEventListener('change', handleFileSelect, false);
+
+    function handleDrop(e) {
+        let dt = e.dataTransfer;
+    let files = dt.files;
+    handleFiles(files);
+            }
+
+    function handleFileSelect(e) {
+        handleFiles(e.target.files);
+            }
+
+    function handleFiles(files) {
+                if (files.length > 0) {
+                    const file = files[0];
+    if (file.type === "application/pdf") {
+        fileNameDisplay.textContent = `File selected: ${file.name}`;
+    fileIsSelected = true;
+                    } else {
+        alert("Please upload a PDF file.");
+    fileNameDisplay.textContent = "";
+    fileIsSelected = false;
+                    }
+                }
+            }
+
+            const callGemini = async (prompt) => {
+                const apiKey = ""; // Handled by environment
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+    const payload = {contents: [{role: "user", parts: [{text: prompt }] }] };
+
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+    headers: {'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+                });
+
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
+
+    const result = await response.json();
+
+    if (result.candidates && result.candidates[0].content.parts) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    throw new Error("Invalid API response structure.");
+                }
+            };
+
+            analyzeBtn.addEventListener('click', async () => {
+                const dreamJob = dreamJobInput.value;
+    if (!fileIsSelected) {
+        alert("Please upload your resume PDF first.");
+    return;
+                }
+    if (dreamJob.trim() === "") {
+        alert("Please enter your dream job title.");
+    return;
+                }
+
+    loader.classList.remove('hidden');
+    resultsSection.classList.add('hidden');
+
+    // ** SIMULATION NOTE **
+    // In a real application, you would send the PDF file to the backend here.
+    // The backend would parse it (e.g., using iTextSharp in C#) to get the text.
+    // For this frontend demo, we'll use mock resume text to simulate the parsed content.
+    const mockResumeText = `
+    John Doe - Aspiring Software Developer
+    Email: john.doe@email.com | Phone: 123-456-7890
+
+    Education:
+    B.S. in Computer Science, State University (2020-2024)
+
+    Skills:
+    - Programming Languages: Python, JavaScript, Java
+    - Frontend: HTML, CSS, React
+    - Backend: Node.js, Express
+    - Databases: SQL, MongoDB
+    - Tools: Git, Docker, VS Code
+    `;
+
+    try {
+                    const prompt = `A user has uploaded their resume. The extracted text is below. Their dream job is "${dreamJob}".
+
+    Perform the following analysis and format the output using Markdown:
+
+    1.  First, create a section "### Your Current Skills" and list the key skills extracted from the resume.
+    2.  Second, create a section "### Key Skills for a ${dreamJob}" and list the top 5-7 most critical skills required for that role, based on general industry knowledge.
+    3.  Third, create a section "### Your Skill Gap" and list ONLY the skills from the "${dreamJob}" list that are MISSING from the user's resume. If there are no gaps, state that.
+    4.  Finally, create a section "### Recommended Courses to Fill the Gaps". For each missing skill, recommend one specific, high-quality online course. Include the course name and provider (like Coursera, Udemy, or Pluralsight). If there are no gaps, provide recommendations for advanced topics.
+
+    Resume Text:
+    ---
+    ${mockResumeText}
+    ---
+    `;
+
+    const analysisResult = await callGemini(prompt);
+    displayResults(analysisResult);
+
+                } catch (error) {
+        console.error("Error during analysis:", error);
+    resultsContainer.innerHTML = `<p class="text-red-500">An error occurred during analysis. Please try again later.</p>`;
+                } finally {
+        loader.classList.add('hidden');
+    resultsSection.classList.remove('hidden');
+                }
+            });
+
+    function displayResults(markdownText) {
+        // A more robust markdown-to-HTML conversion
+        let html = markdownText
+    .split('### ')
+                    .filter(section => section.trim() !== '')
+                    .map(section => {
+                        const lines = section.split(/\r?\n/).filter(line => line.trim() !== '');
+    const title = lines.shift();
+                        const listItems = lines.map(item => `<li>${item.replace(/^- /, '')}</li>`).join('');
+    return `<h4>${title}</h4><ul>${listItems}</ul>`;
+                    })
+                    .join('');
+
+                resultsContainer.innerHTML = html;
+            }
+        });
+    
