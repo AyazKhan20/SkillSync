@@ -18,6 +18,11 @@ namespace SmartJobRecommender.Controllers
             return View();
         }
 
+        public IActionResult Analyze()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();
