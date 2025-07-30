@@ -262,3 +262,36 @@
             }
         });
     
+
+
+//dashboard Page Javascript code
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mock data - In a real app, this would come from the database for the logged-in user.
+            const userProfile = {
+        name: 'Alex Doe',
+    email: 'alex.doe@example.com',
+    skills: ['React', 'JavaScript', 'CSS', 'HTML', 'Node.js', 'SQL', 'Git', 'Figma']
+            };
+
+    const skillsContainer = document.getElementById('skills-container');
+
+            // Render Skills
+            const renderSkills = () => {
+        skillsContainer.innerHTML = '';
+                if (userProfile.skills.length > 0) {
+        userProfile.skills.forEach(skill => {
+            const skillElement = document.createElement('span');
+            skillElement.className = 'skill-tag';
+            skillElement.textContent = skill;
+            skillsContainer.appendChild(skillElement);
+        });
+                } else {
+        skillsContainer.innerHTML = `<p class="text-sm text-gray-500">No skills found. <a href="/Home/Analyze" class="text-blue-600 hover:underline">Analyze your resume</a> to get started.</p>`;
+                }
+            };
+
+    // Initial render
+    renderSkills();
+        });

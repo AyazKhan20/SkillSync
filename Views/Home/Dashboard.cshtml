@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Smart Job Recommender</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+   
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-blue-600">SJR</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="/" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="/Home/Analyze" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Resume Analyzer</a>
+                </div>
+                <div>
+                    <a href="/Identity/Account/Manage" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">My Profile</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-gray-900">Welcome Back, Alex!</h1>
+            <p class="mt-2 text-lg text-gray-600">Here's a snapshot of your career journey.</p>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Profile Card -->
+                <div class="bg-white p-6 rounded-lg shadow-sm fade-in">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">My Profile</h2>
+                    <div class="space-y-2">
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Name</p>
+                            <p class="text-md text-gray-800">Alex Doe</p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-500">Email</p>
+                            <p class="text-md text-gray-800">alex.doe@example.com</p>
+                        </div>
+                    </div>
+                    <button class="mt-4 w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition">Edit Profile</button>
+                </div>
+
+                <!-- Skills Card -->
+                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm fade-in" style="animation-delay: 100ms;">
+                    <h2 class="text-xl font-bold text-gray-800 mb-4">My Skills</h2>
+                    <div id="skills-container" class="flex flex-wrap gap-2">
+                        <!-- Skills will be dynamically inserted -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions Card -->
+            <div class="bg-white p-6 rounded-lg shadow-sm fade-in" style="animation-delay: 200ms;">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Actions</h2>
+                <div class="space-y-3">
+                    <a href="/Home/Analyze" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition">Analyze Your Resume & Get Course Recommendations</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+</body>
+</html>

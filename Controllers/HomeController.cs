@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using SmartJobRecommender.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartJobRecommender.Controllers
 {
@@ -18,7 +19,14 @@ namespace SmartJobRecommender.Controllers
             return View();
         }
 
+        [Authorize]
         public IActionResult Analyze()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult Dashboard()
         {
             return View();
         }
