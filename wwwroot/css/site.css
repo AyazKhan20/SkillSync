@@ -143,5 +143,41 @@ body {
 }
 
 
+/*Dashboard page css*/
+
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f1f5f9; /* slate-100 */
+}
+
+.skill-tag {
+    background-color: #e0e7ff;
+    color: #3730a3;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+
 
 
