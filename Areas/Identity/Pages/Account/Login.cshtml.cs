@@ -89,13 +89,13 @@ namespace SmartJobRecommender.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    // --- FIX APPLIED: Use RedirectToRoute for MVC Controller action ---
-                    // This redirects to the "Analyze" action in the "Home" controller.
+                   
+                   
                     return RedirectToRoute(new { controller = "Home", action = "Analyze" });
-                    // --- END FIX ---
+                    
                 }
 
-                // Handle various failure states (e.g., Two-Factor Authentication, Lockout)
+                
                 if (result.RequiresTwoFactor)
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
@@ -107,13 +107,13 @@ namespace SmartJobRecommender.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    // Generic error message for security
+                    
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
                 }
             }
 
-            // If we got this far, something failed (validation error), redisplay form
+           
             return Page();
         }
     }

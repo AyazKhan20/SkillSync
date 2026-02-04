@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SmartJobRecommender.Data;
 using SmartJobRecommender.Models;
-using SmartJobRecommender.Models.ViewModels; // <-- FIX: Necessary to find RecommendedJobViewModel
+using SmartJobRecommender.Models.ViewModels; 
 using System.Text;
 using System.Text.Json;
 using System.Collections.Generic;
@@ -120,14 +120,14 @@ namespace SmartJobRecommender.Services
                 var requiredSkillIds = job.JobSkills.Select(js => js.SkillId).ToList();
                 int totalRequired = requiredSkillIds.Count;
 
-                if (totalRequired == 0) continue; // Skip jobs with no required skills defined
+                if (totalRequired == 0) continue; 
 
-                // Count how many of the required skills the user possesses
+                
                 int matchedCount = requiredSkillIds.Intersect(userSkillIds).Count();
 
                 double matchPercentage = (double)matchedCount / totalRequired * 100;
 
-                // Create the ViewModel for the recommendation
+               
                 recommendations.Add(new RecommendedJobViewModel
                 {
                     JobId = job.Id,

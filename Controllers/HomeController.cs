@@ -124,15 +124,14 @@ namespace SmartJobRecommender.Controllers
                 viewModel.UserSkills = userSkills;
                 viewModel.TotalSkills = userSkills.Count;
 
-                // 3. Calculate Critical Missing Skills
-                // Get all unique required skills from the top recommended jobs
+                
                 var allRequiredSkills = viewModel.TopRecommendations.SelectMany(r => r.RequiredSkills).Distinct().ToList();
 
-                // Find skills that are required but the user does NOT possess
+               
                 var missingSkills = allRequiredSkills
                     .Except(userSkills, StringComparer.OrdinalIgnoreCase)
                     .OrderByDescending(s =>
-                        // Simple metric: prioritize skills missing from more jobs
+                        
                         viewModel.TopRecommendations.Count(r => r.MissingSkills.Contains(s))
                     )
                     .Take(5)
@@ -144,13 +143,13 @@ namespace SmartJobRecommender.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error loading dashboard data for user {UserId}", userId);
-                // In a production environment, you might redirect to an error page or log the user out.
+               
             }
 
             return View(viewModel);
         }
 
-        // --- Generate Dream Job Analysis (AI Endpoint) ---
+       
         [Authorize]
         [HttpPost]
         [IgnoreAntiforgeryToken]
@@ -215,7 +214,7 @@ namespace SmartJobRecommender.Controllers
             return BadRequest(new { success = false, message = "Please upload and analyze your resume first to establish your skill profile." });
         }
 
-        // This is a dummy class required for the [FromBody] binding in the GenerateDreamJobAnalysis action
+        
         public class DreamJobAnalysisRequest
         {
             public string DreamJobTitle { get; set; }
@@ -224,7 +223,7 @@ namespace SmartJobRecommender.Controllers
 
         public IActionResult Jobs()
         {
-            // Simplified Jobs action as per user request to disable this functionality
+            
             return View();
         }
 

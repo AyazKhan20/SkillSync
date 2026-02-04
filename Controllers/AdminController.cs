@@ -19,13 +19,13 @@ namespace SmartJobRecommender.Controllers
             _context = context;
         }
 
-        // --- 1. Admin Home / Dashboard ---
+       
         public IActionResult Index()
         {
             return View();
         }
 
-        // --- 2. Job Management (List All Jobs) ---
+        #region JobManage
         public async Task<IActionResult> ManageJobs()
         {
             // Fetch all jobs, including their linked skills
@@ -36,11 +36,12 @@ namespace SmartJobRecommender.Controllers
 
             return View(jobs);
         }
+        #endregion
 
-        // --- 3. Create New Job (GET) ---
+        #region CreateJob
         public async Task<IActionResult> CreateJob()
         {
-            // We need to pass all available skills to the view for the checklist/selection box
+            
             var viewModel = new JobViewModel
             {
                 AllSkills = await _context.Skills.Select(s => new SkillListItem
@@ -53,7 +54,7 @@ namespace SmartJobRecommender.Controllers
             return View(viewModel);
         }
 
-        // --- 4. Create New Job (POST) ---
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateJob(JobViewModel viewModel)
@@ -92,6 +93,7 @@ namespace SmartJobRecommender.Controllers
 
             return View(viewModel);
         }
+        #endregion
 
         // --- 5. Skill Management (List and Create Skills) ---
         public async Task<IActionResult> ManageSkills()

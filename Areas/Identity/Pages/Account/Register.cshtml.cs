@@ -17,18 +17,18 @@ using Microsoft.Extensions.Logging;
 
 namespace SmartJobRecommender.Areas.Identity.Pages.Account
 {
-    // The [AllowAnonymous] attribute allows users who are not logged in to access this page
+    
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        // Private fields initialized via dependency injection in the constructor
+        
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly IUserEmailStore<IdentityUser> _emailStore;
 
-        // Constructor: ASP.NET Core automatically injects these services
+       
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
@@ -42,13 +42,13 @@ namespace SmartJobRecommender.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        // Input Model: Binds the data from the HTML form (Input.Email, Input.Password, etc.)
+       
         [BindProperty]
         public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
-        // Input Model Class: Defines the fields the user needs to enter
+       
         public class InputModel
         {
             [Required]
@@ -68,18 +68,18 @@ namespace SmartJobRecommender.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
         }
 
-        // Handles GET requests (initial page load)
+       
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
         }
 
-        // Handles POST requests (form submission) - This is the method we were just looking at
+        
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
-            // Checks if the data submitted by the user is valid (Required, EmailAddress, StringLength checks)
+           
             if (ModelState.IsValid)
             {
                 var user = CreateUser(); // Helper method to create a new IdentityUser instance
