@@ -1,82 +1,163 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Dashboard - Smart Job Recommender</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-   
-</head>
-<body>
+﻿@model SmartJobRecommender.Models.ViewModels.DashboardViewModel
+@using SmartJobRecommender.Models.ViewModels
+@using System.Linq
 
-    <!-- Navigation Bar -->
-    <nav class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <a href="/" class="text-2xl font-bold text-blue-600">SJR</a>
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f1f5f9; /* slate-100 */
+    }
+
+    .dashboard-card {
+        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        border: 1px solid #e2e8f0;
+    }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px -3px rgb(0 0 0 / 0.05);
+        }
+
+    .skill-tag {
+        background-color: #e0f2fe; /* Light blue */
+        color: #0369a1; /* Darker blue */
+    }
+
+    .match-score-high {
+        color: #10b981; /* Emerald 500 */
+    }
+
+    .match-score-medium {
+        color: #fbbf24; /* Amber 500 */
+    }
+</style>
+
+<!-- Navigation Bar (Omitted for brevity, assumed to be in _Layout.cshtml) -->
+<!-- Main Content -->
+<main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+
+    <!-- Welcome Header -->
+    <header class="mb-8 p-6 bg-white rounded-xl shadow-md">
+        <h1 class="text-3xl font-bold text-gray-900">Welcome Back, <span id="user-email">@Model.UserName</span>!</h1>
+        <p class="mt-2 text-lg text-gray-600">Your personalized career overview and roadmap.</p>
+    </header>
+
+    <!-- Dashboard Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Column 1: Core Profile Status -->
+        <div class="lg:col-span-1 space-y-6">
+
+            <!-- Profile Card -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Your Skill Profile</h2>
+                <p class="text-sm text-gray-600 mb-3">Total Skills Found: <span class="font-semibold text-blue-600">@Model.TotalSkills</span></p>
+                <div id="user-skills-summary" class="flex flex-wrap gap-2">
+                    @if (Model.UserSkills.Any())
+                    {
+                        @foreach (var skill in Model.UserSkills)
+                        {
+                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">@skill</span>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-sm text-gray-500">No skills found. Run the Resume Analyzer!</p>
+                    }
                 </div>
-                <div class="hidden md:flex items-center space-x-4">
-                    <a href="/" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                    <a href="/Home/Analyze" class="text-gray-500 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Resume Analyzer</a>
+                <div class="mt-4">
+                    <a href="/Home/Analyze" class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
+                        Run New Analysis &rarr;
+                    </a>
                 </div>
-                <div>
-                    <a href="/Identity/Account/Manage" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">My Profile</a>
+            </div>
+
+            <!-- Action Card -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md text-center">
+                <h2 class="text-xl font-bold text-gray-900 mb-3">Next Critical Steps</h2>
+                @if (Model.CriticalMissingSkills.Any())
+                {
+                    <p class="text-sm text-red-500 font-semibold mb-4">You are missing @Model.CriticalMissingSkills.Count() core skills for your top matches.</p>
+                }
+                else
+                {
+                    <p class="text-sm text-green-600 font-semibold mb-4">Your skills are well-matched for available jobs!</p>
+                }
+
+                <a href="/Home/Analyze" class="w-full inline-block bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 transition-colors">
+                    Analyze Gap & Get Courses
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Column 2 & 3: Recommendations & Gaps -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <!-- Recommended Jobs based on Skills -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Top Job Matches</h2>
+                <div id="recommended-jobs-list" class="space-y-4">
+                    @if (Model.TopRecommendations.Any())
+                    {
+                        @foreach (var job in Model.TopRecommendations)
+                        {
+                            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-semibold text-gray-800">@job.Title (@job.Company)</h3>
+                                    <p class="text-xs text-gray-500">
+                                        @job.Location | Missing: @job.MissingSkills.Count()
+                                    </p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-lg font-bold @(job.MatchScore >= 80 ? "match-score-high" : (job.MatchScore >= 50 ? "match-score-medium" : "text-red-500"))">
+                                        @job.MatchScore%
+                                    </p>
+                                    <a href="/Home/Analyze" class="text-blue-500 hover:text-blue-700 text-sm font-medium">View Gap &rarr;</a>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-gray-500">No recent job matches. Run the resume analyzer now!</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Open Skill Gaps -->
+            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md">
+                <h2 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Critical Missing Skills</h2>
+                <div id="open-gaps-list" class="space-y-4">
+                    @if (Model.CriticalMissingSkills.Any())
+                    {
+                        @foreach (var missingSkill in Model.CriticalMissingSkills)
+                        {
+                            <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                                <div>
+                                    <h3 class="font-semibold text-gray-800">@missingSkill</h3>
+                                    <p class="text-xs text-gray-500">Required by several top matches.</p>
+                                </div>
+                                <a href="/Home/Analyze" class="text-blue-500 hover:text-blue-700 text-sm font-medium">
+                                    Find Courses &rarr;
+                                </a>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-green-600 font-medium">You have no critical missing skills for your top job matches!</p>
+                    }
                 </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+</main>
 
-        <!-- Header -->
-        <header class="mb-8">
-            <h1 class="text-4xl font-bold text-gray-900">Welcome Back, Alex!</h1>
-            <p class="mt-2 text-lg text-gray-600">Here's a snapshot of your career journey.</p>
-        </header>
-
-        <!-- Dashboard Content -->
-        <div class="space-y-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Profile Card -->
-                <div class="bg-white p-6 rounded-lg shadow-sm fade-in">
-                    <h2 class="text-xl font-bold text-gray-800 mb-4">My Profile</h2>
-                    <div class="space-y-2">
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Name</p>
-                            <p class="text-md text-gray-800">Alex Doe</p>
-                        </div>
-                        <div>
-                            <p class="text-sm font-medium text-gray-500">Email</p>
-                            <p class="text-md text-gray-800">alex.doe@example.com</p>
-                        </div>
-                    </div>
-                    <button class="mt-4 w-full text-center bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition">Edit Profile</button>
-                </div>
-
-                <!-- Skills Card -->
-                <div class="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm fade-in" style="animation-delay: 100ms;">
-                    <h2 class="text-xl font-bold text-gray-800 mb-4">My Skills</h2>
-                    <div id="skills-container" class="flex flex-wrap gap-2">
-                        <!-- Skills will be dynamically inserted -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Actions Card -->
-            <div class="bg-white p-6 rounded-lg shadow-sm fade-in" style="animation-delay: 200ms;">
-                <h2 class="text-xl font-bold text-gray-800 mb-4">Actions</h2>
-                <div class="space-y-3">
-                    <a href="/Home/Analyze" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition">Analyze Your Resume & Get Course Recommendations</a>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    
-</body>
-</html>
+<footer class="mt-12 py-6 text-center text-sm text-gray-500">
+    &copy; 2025 Smart Job Recommender.
+</footer>
