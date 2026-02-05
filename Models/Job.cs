@@ -2,7 +2,7 @@
 
 namespace SmartJobRecommender.Models
 {
-    // Represents a job posting
+    
     public class Job
     {
         [Key]
@@ -17,7 +17,7 @@ namespace SmartJobRecommender.Models
         public string Company { get; set; }
 
         [Required]
-        // Full job description, will be used for skill matching
+    
         public string Description { get; set; }
 
         [Required]
@@ -25,9 +25,9 @@ namespace SmartJobRecommender.Models
         public string Location { get; set; }
 
         [StringLength(50)]
-        public string JobType { get; set; } // e.g., Full-time, Internship
+        public string JobType { get; set; } 
 
-        // Navigation property to link this job to its required skills
+        
         public ICollection<JobSkill> JobSkills { get; set; } = new List<JobSkill>();
     }
 }

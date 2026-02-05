@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SmartJobRecommender.Models.ViewModels
 {
-    // Inner class to represent a single skill in a checklist item used by the view.
+    
     public class SkillListItem
     {
         public int SkillId { get; set; }
