@@ -28,6 +28,18 @@ Helps users become job-ready faster
 
 ASP.NET Core MVC
 
+🔹 Frontend
+
+Razor Views
+
+HTML5
+
+CSS3
+
+Bootstrap
+
+JavaScript
+
 Entity Framework Core
 
 LINQ
