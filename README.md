@@ -21,3 +21,15 @@ Identifies missing skills
 Suggests improvement areas
 
 Helps users become job-ready faster
+
+
+🛠️ Tech Stack
+🔹 Backend
+
+ASP.NET Core MVC
+
+Entity Framework Core
+
+LINQ
+
+RESTful APIs
