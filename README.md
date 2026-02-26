@@ -45,3 +45,11 @@ Entity Framework Core
 LINQ
 
 RESTful APIs
+
+🔹 Database
+
+SQL Server
+
+🔹 Optional AI Integration
+
+OpenAI API (for intelligent skill analysis & suggestions)
