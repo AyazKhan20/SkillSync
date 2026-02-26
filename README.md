@@ -7,3 +7,17 @@ SkillSync is a full-stack web application built using ASP.NET Core MVC that anal
 
 This isn’t just CRUD.
 This is intelligent career optimization.
+
+🧠 What Problem It Solves
+
+Many candidates apply blindly to jobs without understanding their skill gap.
+
+SkillSync:
+
+Compares user skills with job requirements
+
+Identifies missing skills
+
+Suggests improvement areas
+
+Helps users become job-ready faster
