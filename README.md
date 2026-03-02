@@ -1,5 +1,8 @@
-🚀 SkillSync
-🎯 AI-Powered Skill Gap Analyzer
+# ⚡ SKILLSYNC.exe  
+### > Detect.Skill.Gap()  
+### > Upgrade.Human.v1 🚀  
+
+```
 
 “Know your skills. Track your gaps. Level up smarter.”
 
