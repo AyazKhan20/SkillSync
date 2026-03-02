@@ -3,56 +3,155 @@
 ### > Upgrade.Human.v1 🚀  
 
 ```
+System Booting...
+Analyzing Candidate...
+Scanning Skills...
+Gap Detected.
+Solution Generated.
+```
 
-“Know your skills. Track your gaps. Level up smarter.”
+🧠 SkillSync is not a project.  
+It’s a **career debugging engine**.
 
-SkillSync is a full-stack web application built using ASP.NET Core MVC that analyzes a user’s skills against job requirements and identifies missing competencies — helping learners and job seekers upgrade strategically.
+Built to scan your skillset, compare it with real-world job roles, and expose exactly what you're missing.
 
-This isn’t just CRUD.
-This is intelligent career optimization.
+No guesswork.  
+No blind applying.  
+Just precision.
 
-🧠 What Problem It Solves
+---
 
-Many candidates apply blindly to jobs without understanding their skill gap.
+## 🧊 Core Protocol
+
+> “You don’t lack talent. You lack alignment.”
 
 SkillSync:
+- Maps your skills
+- Matches job role requirements
+- Detects missing competencies
+- Suggests upgrade paths
+- Turns confusion into clarity
 
-Compares user skills with job requirements
+---
 
-Identifies missing skills
+## 🛠 Tech Arsenal
 
-Suggests improvement areas
+```
+Backend  : ASP.NET Core MVC
+ORM      : Entity Framework Core
+Database : SQL Server
+Frontend : Razor + Bootstrap
+Auth     : ASP.NET Identity
+AI Mode  : OpenAI Integration (Optional)
+```
 
-Helps users become job-ready faster
+Structured. Layered. Scalable.
 
+---
 
-🛠️ Tech Stack
-🔹 Backend
+## 🧬 System Capabilities
 
-ASP.NET Core MVC
+✔ Secure Authentication  
+✔ Role-Based Access (Admin / User)  
+✔ Dynamic Skill Mapping  
+✔ Job Role Management  
+✔ Skill Gap Detection Engine  
+✔ AI-Based Recommendations  
+✔ Clean MVC Architecture  
+✔ Responsive UI  
 
-🔹 Frontend
+---
 
-Razor Views
+## 🧠 How The Engine Works
 
-HTML5
+```
+Input: User Skills
+Target: Desired Job Role
 
-CSS3
+Process:
+Compare()
+Filter()
+DetectMissing()
 
-Bootstrap
+Output:
+Skill Gap Report + Upgrade Path
+```
 
-JavaScript
+No magic.  
+Just logic + architecture.
 
-Entity Framework Core
+---
 
-LINQ
+## 📂 Architecture Snapshot
 
-RESTful APIs
+```
+SkillSync/
+ ├── Controllers/
+ ├── Models/
+ ├── Views/
+ ├── Data/
+ ├── Services/
+ └── Program.cs
+```
 
-🔹 Database
+Separation of concerns respected.  
+No spaghetti code allowed.
 
-SQL Server
+---
 
-🔹 Optional AI Integration
+## ⚙️ Deploy Protocol
 
-OpenAI API (for intelligent skill analysis & suggestions)
+```bash
+git clone https://github.com/AyazKhan20/SkillSync.git
+```
+
+1. Open in Visual Studio  
+2. Update `appsettings.json` connection string  
+3. Run migrations  
+4. Launch  
+
+System ready.
+
+---
+
+## 🎯 Why This Hits Different
+
+Because this isn’t just CRUD.
+
+It demonstrates:
+- Clean MVC design
+- Database relationships
+- Identity authentication
+- Business logic structuring
+- Optional AI integration
+- Real-world problem solving
+
+This is portfolio-grade architecture.
+
+---
+
+## 👨‍💻 Dev Behind The Terminal
+
+**Ayaz Khan Pathan**  
+MCA | Full Stack Developer  
+
+```
+Code. Debug. Improve. Repeat.
+```
+
+GitHub → https://github.com/AyazKhan20  
+LinkedIn → https://linkedin.com/in/ayazkhan-pathan-43302b357  
+
+---
+
+## 🧊 Final Status
+
+```
+Version: 1.0
+Status : Evolving
+Next   : Resume Analyzer | Cloud Deploy | Analytics Dashboard
+```
+
+> Stay ahead. Stay synced.  
+
+If this project looks sharp, drop a ⭐.
