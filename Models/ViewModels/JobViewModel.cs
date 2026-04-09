@@ -7,7 +7,7 @@ namespace SmartJobRecommender.Models.ViewModels
     public class SkillListItem
     {
         public int SkillId { get; set; }
-        public string SkillName { get; set; }
+        public string SkillName { get; set; } = string.Empty;
         public bool IsSelected { get; set; }
     }
 
@@ -21,23 +21,23 @@ namespace SmartJobRecommender.Models.ViewModels
         [Required]
         [StringLength(200)]
         [Display(Name = "Job Title")]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string Company { get; set; }
+        public string Company { get; set; } = string.Empty;
 
         [Required]
         [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         [StringLength(100)]
-        public string Location { get; set; }
+        public string Location { get; set; } = string.Empty;
 
         [StringLength(50)]
         [Display(Name = "Job Type")]
-        public string JobType { get; set; }
+        public string JobType { get; set; } = string.Empty;
 
         // 2. Collection Property (The bridge to the checklist UI)
         public List<SkillListItem> AllSkills { get; set; } = new List<SkillListItem>();

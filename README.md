@@ -114,6 +114,42 @@ System ready.
 
 ---
 
+## 🚀 Production Deployment (Docker)
+
+SkillSync is containerized for consistent deployment across environments.
+
+### Prerequisites:
+- [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+### Build the Docker Image:
+```bash
+docker build -t skill-sync:latest .
+```
+
+### Run the Container:
+```bash
+docker run -d -p 8080:8080 --name skill-sync-app skill-sync:latest
+```
+
+The application will be available at `http://localhost:8080`.
+
+### Environment Variables:
+For production, ensure the following are set in your environment or orchestrator (e.g., Kubernetes Secrets, Azure Key Vault):
+- `ConnectionStrings__DefaultConnection`: The production SQL Server connection string.
+- `ASPNETCORE_ENVIRONMENT`: Set to `Production`.
+
+---
+
+## 🛡 Security & Logging
+
+- **Serilog**: Structured JSON logging to `Logs/` directory and Console.
+- **HSTS**: Enforced in production for secure connections.
+- **Security Headers**: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, and CSP configured.
+- **Identity**: Built-in ASP.NET Identity for secure authentication.
+
+---
+
 ## 🎯 Why This Hits Different
 
 Because this isn’t just CRUD.

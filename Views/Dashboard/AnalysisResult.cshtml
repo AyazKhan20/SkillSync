@@ -1,0 +1,57 @@
+@{
+    ViewData["Title"] = "Analysis Results";
+    var skills = ViewBag.DetectedSkills as List<string>;
+}
+
+<div class="pt-32 pb-20 px-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12 animate-fade-in">
+            <div>
+                <h1 class="text-6xl font-black text-slate-900 tracking-tighter mb-4">Your Skill Profile</h1>
+                <p class="text-xl text-slate-500 font-medium">We've mapped your competencies after a detailed scan.</p>
+            </div>
+            <a asp-action="Index" class="bg-slate-100 text-slate-900 font-bold px-8 py-4 rounded-2xl hover:bg-slate-200 transition-all text-sm">
+                GO BACK TO DASHBOARD
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            <div class="bg-blue-600 p-12 rounded-[3.5rem] text-white shadow-2xl relative overflow-hidden group">
+                <div class="relative z-10">
+                    <span class="text-blue-200 font-bold uppercase tracking-widest text-xs mb-8 block">Resume Match Score</span>
+                    <div class="text-9xl font-black mb-4 tracking-tighter group-hover:scale-105 transition-transform">85%</div>
+                    <p class="text-blue-100 font-medium text-lg">Great work! You're above average for your profile category.</p>
+                </div>
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-all"></div>
+            </div>
+
+            <div class="bg-white p-12 rounded-[3.5rem] border border-slate-100 shadow-sm relative overflow-hidden">
+                <span class="text-slate-400 font-bold uppercase tracking-widest text-xs mb-8 block">Detected Skills</span>
+                <div class="flex flex-wrap gap-3">
+                    @if (skills != null)
+                    {
+                        foreach (var skill in skills)
+                        {
+                            <span class="px-6 py-3 bg-slate-50 border border-slate-100 text-slate-900 font-bold rounded-2xl hover:bg-blue-50 hover:border-blue-200 transition-all cursor-default">
+                                @skill
+                            </span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-slate-900 rounded-[4rem] p-16 text-white text-center">
+            <h2 class="text-4xl font-black mb-6">Skills Detected. Next step?</h2>
+            <p class="text-xl text-slate-400 mb-12 max-w-2xl mx-auto font-medium leading-relaxed">Let's see which roles match your profile best and identify where you can upgrade your career roadmap.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-white text-slate-900 px-12 py-5 rounded-2xl font-black text-xl hover:bg-blue-50 transition-all shadow-2xl">
+                    VIEW RECOMMENDED JOBS
+                </button>
+                <button class="bg-slate-800 text-slate-400 px-12 py-5 rounded-2xl font-black text-xl hover:text-white transition-all">
+                    IDENTIFY SKILL GAPS
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

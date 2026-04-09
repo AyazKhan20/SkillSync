@@ -6,7 +6,7 @@ namespace SmartJobRecommender.Models.ViewModels
 
     public class DashboardViewModel
     {
-        public string UserName { get; set; } 
+        public string UserName { get; set; } = string.Empty;
         public int TotalSkills { get; set; }
         public DateTime? LastAnalyzed { get; set; } 
 

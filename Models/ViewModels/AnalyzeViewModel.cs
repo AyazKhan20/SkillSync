@@ -9,12 +9,12 @@ namespace SmartJobRecommender.Models.ViewModels
        
         [Required(ErrorMessage = "Please upload your resume.")]
         [Display(Name = "Upload Resume (PDF only)")]
-        public IFormFile ResumeFile { get; set; }
+        public IFormFile ResumeFile { get; set; } = default!;
 
        
         [Required(ErrorMessage = "Please enter your dream job title.")]
         [Display(Name = "Dream Job Title")]
-        public string DreamJobTitle { get; set; }
+        public string DreamJobTitle { get; set; } = string.Empty;
 
       
         public bool AnalysisCompleted { get; set; } = false;
@@ -22,6 +22,6 @@ namespace SmartJobRecommender.Models.ViewModels
         public List<RecommendedJobViewModel> RecommendedJobs { get; set; } = new List<RecommendedJobViewModel>();
 
         
-        public string DreamJobAnalysisResult { get; set; }
+        public string DreamJobAnalysisResult { get; set; } = string.Empty;
     }
 }

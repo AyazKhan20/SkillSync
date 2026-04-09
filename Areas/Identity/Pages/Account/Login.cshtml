@@ -47,25 +47,26 @@
 
             <!-- FORM START: Replace the inner content of this form tag with your scaffolded Identity form content, ensuring the class is retained for styling -->
             <form id="account" method="post" class="space-y-6">
+                <div asp-validation-summary="All" class="text-red-400 text-sm"></div>
 
                 <!-- Email Input Field -->
                 <div>
                     <label for="Input_Email" class="sr-only">Email</label>
-                    <input type="email" id="Input_Email" name="Input.Email" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Email address">
-                    @* Placeholder for: <span asp-validation-for="Input.Email" class="text-red-400 text-sm"></span> *@
+                    <input type="email" id="Input_Email" asp-for="Input.Email" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Email address">
+                    <span asp-validation-for="Input.Email" class="text-red-400 text-sm"></span>
                 </div>
 
                 <!-- Password Input Field -->
                 <div>
                     <label for="Input_Password" class="sr-only">Password</label>
-                    <input type="password" id="Input_Password" name="Input.Password" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Password">
-                    @* Placeholder for: <span asp-validation-for="Input.Password" class="text-red-400 text-sm"></span> *@
+                    <input type="password" id="Input_Password" asp-for="Input.Password" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Password">
+                    <span asp-validation-for="Input.Password" class="text-red-400 text-sm"></span>
                 </div>
 
                 <!-- Remember Me Checkbox (Optional) -->
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
-                        <input id="Input_RememberMe" name="Input.RememberMe" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 bg-slate-700">
+                        <input id="Input_RememberMe" asp-for="Input.RememberMe" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 bg-slate-700">
                         <label for="Input_RememberMe" class="ml-2 block text-sm text-slate-300">Remember me</label>
                     </div>
                     <a href="/Identity/Account/ForgotPassword" class="text-sm text-blue-400 hover:text-blue-300">Need help?</a>
@@ -86,6 +87,10 @@
             </div>
         </div>
     </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
 </body>
 </html>
