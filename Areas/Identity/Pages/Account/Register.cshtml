@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model SmartJobRecommender.Areas.Identity.Pages.Account.RegisterModel
 @{
     Layout = null;
@@ -9,81 +9,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Smart Job Recommender</title>
+    <title>Create Account - Smart Job Recommender</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-cream: #f0fdf4;
+            --bg-sand: #ecfccb;
+            --brand-green: #15803d;
+            --brand-green-dark: #166534;
+            --brand-amber: #d97706;
+            --panel: rgba(255, 255, 255, 0.86);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a; /* Slate 900 for a deep, dark background */
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            background:
+                radial-gradient(circle at 80% 85%, #bbf7d0 0%, transparent 35%),
+                radial-gradient(circle at 15% 25%, #fde68a 0%, transparent 33%),
+                linear-gradient(135deg, var(--bg-cream) 0%, var(--bg-sand) 100%);
+            overflow-x: hidden;
         }
 
-        .bg-overlay {
-            /* Optional: Add a subtle background image or pattern here if desired */
-            background-image: url('https://placehold.co/1920x1080/0f172a/0f172a');
-            background-size: cover;
-            background-position: center;
+        .floating-shape {
+            position: absolute;
+            border-radius: 999px;
+            animation: drift 11s ease-in-out infinite;
+            opacity: 0.35;
+            pointer-events: none;
         }
 
-        .register-card {
-            background-color: rgba(2, 6, 23, 0.95); /* Semi-transparent dark blue/black for card */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        .shape-a {
+            width: 230px;
+            height: 230px;
+            top: -70px;
+            left: -65px;
+            background: #bbf7d0;
+        }
+
+        .shape-b {
+            width: 170px;
+            height: 170px;
+            right: -55px;
+            bottom: -48px;
+            background: #fde68a;
+            animation-delay: 1.6s;
+        }
+
+        @@keyframes drift {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(10px);
+            }
+        }
+
+        .auth-shell {
+            min-height: 100vh;
+            display: grid;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 1060px;
+            margin: 0 auto;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            background: var(--panel);
+            box-shadow: 0 30px 70px rgba(21, 128, 61, 0.18);
+            backdrop-filter: blur(8px);
+            display: grid;
+            grid-template-columns: 1fr;
+            animation: rise 0.55s ease-out;
+            position: relative;
+            z-index: 2;
+        }
+
+        @@keyframes rise {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-showcase {
+            display: none;
+            padding: 2.7rem;
+            color: #ffffff;
+            background: linear-gradient(160deg, #166534 0%, #15803d 45%, #d97706 100%);
+        }
+
+        .auth-showcase h1 {
+            margin: 0 0 1rem 0;
+            line-height: 1.15;
+            font-size: 2rem;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .auth-showcase p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .auth-form {
+            padding: 2rem 1.2rem;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--brand-green-dark);
+            background: rgba(22, 101, 52, 0.08);
+            border: 1px solid rgba(22, 101, 52, 0.2);
+            border-radius: 999px;
+            padding: 0.35rem 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .auth-form h2 {
+            margin: 0 0 0.35rem 0;
+            font-family: 'Sora', sans-serif;
+            font-size: 1.7rem;
+            color: #111827;
+        }
+
+        .subtext {
+            margin: 0 0 1.25rem 0;
+            color: var(--text-muted);
+        }
+
+        .field-wrap {
+            margin-bottom: 1rem;
+        }
+
+        .field-wrap label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #334155;
+        }
+
+        .field-wrap input {
+            width: 100%;
+            border-radius: 0.8rem;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem 0.9rem;
+            background: #ffffff;
+            color: #111827;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .field-wrap input:focus {
+            outline: none;
+            border-color: var(--brand-green);
+            box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.15);
+        }
+
+        .cta-btn {
+            width: 100%;
+            border: 0;
+            border-radius: 0.9rem;
+            padding: 0.86rem 1rem;
+            margin-top: 0.2rem;
+            font-family: 'Sora', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--brand-green) 0%, var(--brand-amber) 100%);
+            box-shadow: 0 12px 24px rgba(217, 119, 6, 0.25);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 30px rgba(217, 119, 6, 0.3);
+        }
+
+        .validation-summary {
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+        }
+
+        .text-danger {
+            display: block;
+            margin-top: 0.35rem;
+            font-size: 0.82rem;
+            color: #b91c1c;
+        }
+
+        .foot-link {
+            margin-top: 1.2rem;
+            text-align: center;
+            color: #475569;
+            font-size: 0.92rem;
+        }
+
+        .foot-link a {
+            color: var(--brand-green-dark);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .foot-link a:hover {
+            text-decoration: underline;
+        }
+
+        @@media (min-width: 900px) {
+            .auth-card {
+                grid-template-columns: 1.05fr 1fr;
+            }
+
+            .auth-showcase {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 1.25rem;
+                position: relative;
+            }
+
+            .auth-showcase::after {
+                content: "";
+                position: absolute;
+                width: 210px;
+                height: 210px;
+                right: -70px;
+                top: -60px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.16);
+            }
+
+            .auth-form {
+                padding: 2.7rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="floating-shape shape-a"></div>
+    <div class="floating-shape shape-b"></div>
 
-    <!-- Full-Screen Register Container -->
-    <div class="min-h-screen flex flex-col items-center justify-center p-4 bg-overlay">
+    <div class="auth-shell">
+        <div class="auth-card">
+            <aside class="auth-showcase">
+                <h1>Build your profile. Unlock smarter job matches.</h1>
+                <p>Create your account to get personalized recommendations based on your current and emerging skills.</p>
+            </aside>
 
-        <!-- Header/Logo (Top Left, Consistent with Login) -->
-        <header class="absolute top-0 left-0 p-8">
-            <h1 class="text-3xl font-bold text-blue-600">SJR</h1>
-        </header>
+            <section class="auth-form">
+                <div class="brand-pill">SJR Onboarding</div>
+                <h2>Create account</h2>
+                <p class="subtext">Start with your email and set a secure password.</p>
 
-        <!-- Register Form Card -->
-        <div class="register-card w-full max-w-md p-8 sm:p-12 rounded-lg text-white">
-            <h2 class="text-3xl font-bold mb-8 text-white">Sign Up</h2>
+                <form id="registerForm" method="post" asp-route-returnUrl="@Model.ReturnUrl" novalidate>
+                    <div asp-validation-summary="ModelOnly" class="text-danger validation-summary" role="alert"></div>
 
-            <!-- FORM START: Replace the inner content of this form tag with your scaffolded Identity form content, ensuring the class is retained for styling -->
-            <form id="registerForm" method="post" class="space-y-6">
+                    <div class="field-wrap">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" autocomplete="username" aria-required="true" placeholder="you@example.com" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
 
-                <!-- Email Input Field -->
-                <div>
-                    <label for="Input_Email" class="sr-only">Email</label>
-                    <input type="email" id="Input_Email" name="Input.Email" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Email address">
-                    @* Placeholder for: <span asp-validation-for="Input.Email" class="text-red-400 text-sm"></span> *@
-                </div>
+                    <div class="field-wrap">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" autocomplete="new-password" aria-required="true" placeholder="At least 6 characters" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
 
-                <!-- Password Input Field -->
-                <div>
-                    <label for="Input_Password" class="sr-only">Password</label>
-                    <input type="password" id="Input_Password" name="Input.Password" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Password (min 6 characters)">
-                    @* Placeholder for: <span asp-validation-for="Input.Password" class="text-red-400 text-sm"></span> *@
-                </div>
+                    <div class="field-wrap">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" autocomplete="new-password" aria-required="true" placeholder="Re-enter password" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
 
-                <!-- Confirm Password Input Field -->
-                <div>
-                    <label for="Input_ConfirmPassword" class="sr-only">Confirm Password</label>
-                    <input type="password" id="Input_ConfirmPassword" name="Input.ConfirmPassword" required class="w-full px-4 py-3 rounded-md bg-slate-700 border-none placeholder-slate-400 focus:ring-blue-500 focus:border-blue-500 text-white" placeholder="Confirm Password">
-                    @* Placeholder for: <span asp-validation-for="Input.ConfirmPassword" class="text-red-400 text-sm"></span> *@
-                </div>
+                    <button type="submit" class="cta-btn">Create account</button>
+                </form>
 
-                <!-- Submit Button -->
-                <button type="submit" class="w-full py-3 bg-blue-600 rounded-md font-semibold text-lg hover:bg-blue-700 transition-colors shadow-lg">
-                    Sign Up
-                </button>
-            </form>
-            <!-- FORM END -->
-
-            <div class="mt-8 text-center">
-                <p class="text-slate-400">
-                    Already a member?
-                    <a href="/Identity/Account/Login" class="text-white hover:text-blue-400 font-semibold">Sign in here.</a>
+                <p class="foot-link">
+                    Already have an account?
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Sign in</a>
                 </p>
-            </div>
+            </section>
         </div>
     </div>
 
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>
