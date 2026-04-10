@@ -258,7 +258,7 @@ namespace SmartJobRecommender.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Jobs");
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("SmartJobRecommender.Models.JobSkill", b =>
@@ -273,7 +273,7 @@ namespace SmartJobRecommender.Data.Migrations
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("JobSkills");
+                    b.ToTable("JobSkills", (string)null);
                 });
 
             modelBuilder.Entity("SmartJobRecommender.Models.Skill", b =>
@@ -291,7 +291,7 @@ namespace SmartJobRecommender.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Skills");
+                    b.ToTable("Skills", (string)null);
                 });
 
             modelBuilder.Entity("SmartJobRecommender.Models.UserSkill", b =>
@@ -306,7 +306,7 @@ namespace SmartJobRecommender.Data.Migrations
 
                     b.HasIndex("SkillId");
 
-                    b.ToTable("UserSkills");
+                    b.ToTable("UserSkills", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

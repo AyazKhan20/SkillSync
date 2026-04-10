@@ -1,4 +1,4 @@
-﻿@model SmartJobRecommender.Models.ViewModels.DashboardViewModel
+@model SmartJobRecommender.Models.ViewModels.DashboardViewModel
 @using SmartJobRecommender.Models.ViewModels
 @using System.Linq
 
@@ -7,157 +7,297 @@
 }
 
 <style>
-    body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f1f5f9; /* slate-100 */
+    :root {
+        --db-bg-a: #f0fdfa;
+        --db-bg-b: #fef9c3;
+        --db-panel: rgba(255, 255, 255, 0.86);
+        --db-ink: #0f172a;
+        --db-muted: #475569;
+        --db-teal: #0f766e;
+        --db-amber: #d97706;
+        --db-border: rgba(148, 163, 184, .28);
     }
 
-    .dashboard-card {
-        transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    .db-page {
+        position: relative;
+        min-height: calc(100vh - 120px);
+        border-radius: 1.2rem;
+        padding: 1rem;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 92% 10%, #99f6e4 0%, transparent 30%),
+            radial-gradient(circle at 5% 30%, #fde68a 0%, transparent 28%),
+            linear-gradient(140deg, var(--db-bg-a) 0%, var(--db-bg-b) 100%);
+    }
+
+    .db-orb {
+        position: absolute;
+        border-radius: 999px;
+        pointer-events: none;
+        opacity: .3;
+        animation: db-float 11s ease-in-out infinite;
+    }
+
+    .db-orb.one {
+        width: 200px;
+        height: 200px;
+        top: -60px;
+        right: -65px;
+        background: #5eead4;
+    }
+
+    .db-orb.two {
+        width: 150px;
+        height: 150px;
+        left: -50px;
+        bottom: -40px;
+        background: #fcd34d;
+        animation-delay: 1.7s;
+    }
+
+    @@keyframes db-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(8px); }
+    }
+
+    .db-shell {
+        max-width: 1220px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    .db-hero {
+        border-radius: 1.2rem;
+        padding: 1.45rem;
+        margin-bottom: 1rem;
+        color: #fff;
+        background: linear-gradient(145deg, #0f766e 0%, #14b8a6 42%, #d97706 100%);
+        box-shadow: 0 24px 50px rgba(15, 118, 110, .24);
+    }
+
+    .db-hero h1 {
+        margin: 0;
+        font-size: clamp(1.5rem, 2.1vw, 2.2rem);
+        font-weight: 800;
+        letter-spacing: -.02em;
+    }
+
+    .db-hero p {
+        margin: .4rem 0 0;
+        color: rgba(255,255,255,.92);
+        font-size: .98rem;
+    }
+
+    .db-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .db-card {
+        border: 1px solid var(--db-border);
+        border-radius: 1rem;
+        background: var(--db-panel);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 14px 30px rgba(15, 23, 42, .08);
+        padding: 1rem;
+        transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .db-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 36px rgba(15, 23, 42, .12);
+    }
+
+    .db-title {
+        font-size: 1.06rem;
+        font-weight: 800;
+        margin: 0 0 .65rem;
+        color: var(--db-ink);
+    }
+
+    .db-subtle {
+        font-size: .9rem;
+        color: var(--db-muted);
+    }
+
+    .db-chip {
+        display: inline-flex;
+        align-items: center;
+        padding: .2rem .62rem;
+        border-radius: 999px;
+        font-size: .76rem;
+        font-weight: 700;
+        background: #ccfbf1;
+        color: #115e59;
+    }
+
+    .db-link {
+        color: #0f766e;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+    .db-link:hover {
+        text-decoration: underline;
+    }
+
+    .db-btn {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        color: #fff;
+        font-weight: 700;
+        border-radius: .8rem;
+        padding: .72rem 1rem;
+        text-decoration: none;
+        background: linear-gradient(135deg, var(--db-teal) 0%, var(--db-amber) 100%);
+        box-shadow: 0 10px 24px rgba(217, 119, 6, .24);
+        transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .db-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 14px 28px rgba(217, 119, 6, .3);
+    }
+
+    .db-job {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: .75rem;
+        border-radius: .85rem;
         border: 1px solid #e2e8f0;
+        background: rgba(255,255,255,.95);
+        padding: .8rem;
     }
 
-        .dashboard-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 10px -3px rgb(0 0 0 / 0.05);
+    .db-score-high { color: #16a34a; }
+    .db-score-medium { color: #d97706; }
+
+    .db-gap {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: .8rem;
+        background: #fff1f2;
+        border: 1px solid #fecdd3;
+        padding: .75rem;
+    }
+
+    @@media (min-width: 1024px) {
+        .db-page {
+            padding: 1.3rem;
         }
 
-    .skill-tag {
-        background-color: #e0f2fe; /* Light blue */
-        color: #0369a1; /* Darker blue */
-    }
-
-    .match-score-high {
-        color: #10b981; /* Emerald 500 */
-    }
-
-    .match-score-medium {
-        color: #fbbf24; /* Amber 500 */
+        .db-grid {
+            grid-template-columns: 1fr 2fr;
+        }
     }
 </style>
 
-<!-- Navigation Bar (Omitted for brevity, assumed to be in _Layout.cshtml) -->
-<!-- Main Content -->
-<main class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+<div class="db-page">
+    <div class="db-orb one"></div>
+    <div class="db-orb two"></div>
 
-    <!-- Welcome Header -->
-    <header class="mb-8 p-6 bg-white rounded-xl shadow-md">
-        <h1 class="text-3xl font-bold text-gray-900">Welcome Back, <span id="user-email">@Model.UserName</span>!</h1>
-        <p class="mt-2 text-lg text-gray-600">Your personalized career overview and roadmap.</p>
-    </header>
+    <div class="db-shell">
+        <header class="db-hero">
+            <h1>Welcome back, @Model.UserName</h1>
+            <p>Your personalized skill map, role matches, and next moves in one place.</p>
+        </header>
 
-    <!-- Dashboard Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="db-grid">
+            <div class="space-y-4">
+                <section class="db-card">
+                    <h2 class="db-title">Your Skill Profile</h2>
+                    <p class="db-subtle mb-3">Total Skills Found: <span class="font-semibold text-cyan-700">@Model.TotalSkills</span></p>
 
-        <!-- Column 1: Core Profile Status -->
-        <div class="lg:col-span-1 space-y-6">
-
-            <!-- Profile Card -->
-            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md">
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Your Skill Profile</h2>
-                <p class="text-sm text-gray-600 mb-3">Total Skills Found: <span class="font-semibold text-blue-600">@Model.TotalSkills</span></p>
-                <div id="user-skills-summary" class="flex flex-wrap gap-2">
-                    @if (Model.UserSkills.Any())
-                    {
-                        @foreach (var skill in Model.UserSkills)
+                    <div class="flex flex-wrap gap-2">
+                        @if (Model.UserSkills.Any())
                         {
-                            <span class="skill-tag px-3 py-1 rounded-full text-xs font-semibold">@skill</span>
+                            @foreach (var skill in Model.UserSkills)
+                            {
+                                <span class="db-chip">@skill</span>
+                            }
                         }
-                    }
-                    else
-                    {
-                        <p class="text-sm text-gray-500">No skills found. Run the Resume Analyzer!</p>
-                    }
-                </div>
-                <div class="mt-4">
-                    <a href="/Home/Analyze" class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center">
-                        Run New Analysis &rarr;
-                    </a>
-                </div>
-            </div>
-
-            <!-- Action Card -->
-            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md text-center">
-                <h2 class="text-xl font-bold text-gray-900 mb-3">Next Critical Steps</h2>
-                @if (Model.CriticalMissingSkills.Any())
-                {
-                    <p class="text-sm text-red-500 font-semibold mb-4">You are missing @Model.CriticalMissingSkills.Count() core skills for your top matches.</p>
-                }
-                else
-                {
-                    <p class="text-sm text-green-600 font-semibold mb-4">Your skills are well-matched for available jobs!</p>
-                }
-
-                <a href="/Home/Analyze" class="w-full inline-block bg-green-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-green-600 transition-colors">
-                    Analyze Gap & Get Courses
-                </a>
-            </div>
-
-        </div>
-
-        <!-- Column 2 & 3: Recommendations & Gaps -->
-        <div class="lg:col-span-2 space-y-6">
-
-            <!-- Recommended Jobs based on Skills -->
-            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md">
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Top Job Matches</h2>
-                <div id="recommended-jobs-list" class="space-y-4">
-                    @if (Model.TopRecommendations.Any())
-                    {
-                        @foreach (var job in Model.TopRecommendations)
+                        else
                         {
-                            <div class="flex justify-between items-center p-3 bg-slate-50 rounded-lg">
-                                <div>
-                                    <h3 class="font-semibold text-gray-800">@job.Title (@job.Company)</h3>
-                                    <p class="text-xs text-gray-500">
-                                        @job.Location | Missing: @job.MissingSkills.Count()
-                                    </p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-lg font-bold @(job.MatchScore >= 80 ? "match-score-high" : (job.MatchScore >= 50 ? "match-score-medium" : "text-red-500"))">
-                                        @job.MatchScore%
-                                    </p>
-                                    <a href="/Home/Analyze" class="text-blue-500 hover:text-blue-700 text-sm font-medium">View Gap &rarr;</a>
-                                </div>
-                            </div>
+                            <p class="db-subtle">No skills found yet. Run the resume analyzer.</p>
                         }
-                    }
-                    else
-                    {
-                        <p class="text-gray-500">No recent job matches. Run the resume analyzer now!</p>
-                    }
-                </div>
-            </div>
+                    </div>
 
-            <!-- Open Skill Gaps -->
-            <div class="dashboard-card bg-white p-6 rounded-xl shadow-md">
-                <h2 class="text-xl font-bold text-gray-900 border-b pb-3 mb-4">Critical Missing Skills</h2>
-                <div id="open-gaps-list" class="space-y-4">
+                    <div class="mt-4">
+                        <a href="/Home/Analyze" class="db-link">Run new analysis</a>
+                    </div>
+                </section>
+
+                <section class="db-card text-center">
+                    <h2 class="db-title">Next Critical Steps</h2>
                     @if (Model.CriticalMissingSkills.Any())
                     {
-                        @foreach (var missingSkill in Model.CriticalMissingSkills)
-                        {
-                            <div class="flex justify-between items-center p-3 bg-red-50 rounded-lg">
-                                <div>
-                                    <h3 class="font-semibold text-gray-800">@missingSkill</h3>
-                                    <p class="text-xs text-gray-500">Required by several top matches.</p>
-                                </div>
-                                <a href="/Home/Analyze" class="text-blue-500 hover:text-blue-700 text-sm font-medium">
-                                    Find Courses &rarr;
-                                </a>
-                            </div>
-                        }
+                        <p class="text-rose-600 font-semibold text-sm mb-3">You are missing @Model.CriticalMissingSkills.Count() key skills for top matches.</p>
                     }
                     else
                     {
-                        <p class="text-green-600 font-medium">You have no critical missing skills for your top job matches!</p>
+                        <p class="text-emerald-700 font-semibold text-sm mb-3">Your skills are well aligned with current openings.</p>
                     }
-                </div>
+
+                    <a href="/Home/Analyze" class="db-btn">Analyze Gap and Get Courses</a>
+                </section>
+            </div>
+
+            <div class="space-y-4">
+                <section class="db-card">
+                    <h2 class="db-title">Top Job Matches</h2>
+
+                    <div class="space-y-3">
+                        @if (Model.TopRecommendations.Any())
+                        {
+                            @foreach (var job in Model.TopRecommendations)
+                            {
+                                <div class="db-job">
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800">@job.Title (@job.Company)</h3>
+                                        <p class="text-xs text-slate-500">@job.Location | Missing: @job.MissingSkills.Count()</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-lg font-bold @(job.MatchScore >= 80 ? "db-score-high" : (job.MatchScore >= 50 ? "db-score-medium" : "text-rose-600"))">@job.MatchScore%</p>
+                                        <a href="/Home/Analyze" class="db-link text-sm">View gap</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="db-subtle">No recent job matches. Run resume analysis to generate recommendations.</p>
+                        }
+                    </div>
+                </section>
+
+                <section class="db-card">
+                    <h2 class="db-title">Critical Missing Skills</h2>
+                    <div class="space-y-3">
+                        @if (Model.CriticalMissingSkills.Any())
+                        {
+                            @foreach (var missingSkill in Model.CriticalMissingSkills)
+                            {
+                                <div class="db-gap">
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800">@missingSkill</h3>
+                                        <p class="text-xs text-slate-500">Required by several top matches.</p>
+                                    </div>
+                                    <a href="/Home/Analyze" class="db-link text-sm">Find courses</a>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-emerald-700 font-medium">No critical gaps detected for your top matches.</p>
+                        }
+                    </div>
+                </section>
             </div>
         </div>
-
-</main>
-
-<footer class="mt-12 py-6 text-center text-sm text-gray-500">
-    &copy; 2025 Smart Job Recommender.
-</footer>
+    </div>
+</div>
