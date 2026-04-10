@@ -100,6 +100,11 @@ namespace SmartJobRecommender.Areas.Identity.Pages.Account
                 {
                     return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, Input.RememberMe });
                 }
+                if (result.IsNotAllowed)
+                {
+                    ModelState.AddModelError(string.Empty, "Login is not allowed for this account yet.");
+                    return Page();
+                }
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning("User account locked out.");
